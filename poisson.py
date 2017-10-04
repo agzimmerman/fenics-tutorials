@@ -1,51 +1,52 @@
-from fenics import *
-
-import numpy as np
+import fenics
+import numpy
 
 
 # Create mesh and define function space
-mesh = UnitSquareMesh(8, 8)
+mesh = fenics.UnitSquareMesh(8, 8)
 
-V = FunctionSpace(mesh, 'P', 1)
+V = fenics.FunctionSpace(mesh, 'P', 1)
 
 
 # Define boundary condition
-u_D = Expression('1 + x[0]*x[0] + 2*x[1]*x[1]', degree=2)
+u_D = fenics.Expression('1 + x[0]*x[0] + 2*x[1]*x[1]', degree=2)
 
 def boundary(x, on_boundary):
 
     return on_boundary
 
     
-bc = DirichletBC(V, u_D, boundary)
+bc = fenics.DirichletBC(V, u_D, boundary)
 
 
 # Define variational problem
-u = TrialFunction(V)
+u = fenics.TrialFunction(V)
 
-v = TestFunction(V)
+v = fenics.TestFunction(V)
 
-f = Constant(-6.0)
+f = fenics.Constant(-6.0)
 
-a = dot(grad(u), grad(v))*dx
+dot, grad, = fenics.dot, fenics.grad
 
-L = f*v*dx
+a = dot(grad(u), grad(v))*fenics.dx
+
+L = f*v*fenics.dx
 
 
 # Compute solution
-u = Function(V)
+u = fenics.Function(V)
 
-solve(a == L, u, bc)
+fenics.solve(a == L, u, bc)
 
 
 # Save solution to file in VTK format
-vtkfile = File('poisson/solution.pvd')
+vtkfile = fenics.File('poisson/solution.pvd')
 
 vtkfile << u
 
 
 # Compute error in L2 norm
-error_L2 = errornorm(u_D, u, 'L2')
+error_L2 = fenics.errornorm(u_D, u, 'L2')
 
 
 # Compute maximum error at vertices
@@ -53,7 +54,7 @@ vertex_values_u_D = u_D.compute_vertex_values(mesh)
 
 vertex_values_u = u.compute_vertex_values(mesh)
 
-error_max = np.max(np.abs(vertex_values_u_D - vertex_values_u))
+error_max = numpy.max(numpy.abs(vertex_values_u_D - vertex_values_u))
 
 
 # Print errors
