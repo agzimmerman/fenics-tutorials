@@ -5,7 +5,7 @@ import numpy
 # Create mesh and define function space
 mesh = fenics.UnitSquareMesh(8, 8)
 
-V = fenics.FunctionSpace(mesh, 'P', 1)
+V = fenics.FunctionSpace(mesh, 'P', 2)
 
 
 # Define boundary condition
