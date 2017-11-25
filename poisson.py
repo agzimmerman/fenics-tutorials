@@ -9,7 +9,7 @@ V = fenics.FunctionSpace(mesh, 'P', 2)
 
 
 # Define boundary condition
-u_D = fenics.Expression('1 + x[0]*x[0] + 2*x[1]*x[1]', degree=2)
+u_D = fenics.Expression('1 + pow(x[0], 2) + 2*pow(x[1], 2)', degree=2)
 
 def boundary(x, on_boundary):
 
