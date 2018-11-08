@@ -1,5 +1,3 @@
 # fenics-tutorials
 
-This repository contains some Python+FEniCS scripts which demonstrate simple concepts.
-
-poisson.py is a modified version of the example from [Solving PDEs in Python](https://www.springer.com/us/book/9783319524610).
+This repository collects some Python scripts and Jupyter notebooks which have been useful for demonstrating concepts involving the use of the finite element software library FEniCS.
